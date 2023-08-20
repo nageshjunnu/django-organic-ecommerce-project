@@ -1,0 +1,80 @@
+{% extends 'frontend/base.html' %}
+{% block 'title' %}All Orders{% endblock %}
+{% block 'content' %}
+{% block 'styles' %}
+<style>
+.nice-select {
+  width: 100% !important ;
+  margin-bottom:10px;
+}
+</style>
+{% endblock %}
+<section class="shop-area-start grey-bg pb-200">
+    <div class="container">
+        {% comment %} welcome {{request.user}} {% endcomment %}
+       <div class="row">
+        <div class="col-xl-3 col-lg-12 col-md-12">
+          <div class="tpdetails__title-box">
+            <h3 class="tpdetails__title">Welcome <span class="text-capitalize">{{request.user}}</span></h3>            
+         </div>
+         <div>
+            <a href={% url 'profile' %}><button class="tptrack__submition tpsign__reg " style = "margin-bottom:10px;">Profile</button></a>
+          
+            <a href={% url 'address' %}><button class="tptrack__submition tpsign__reg "  style = "margin-bottom:10px;">Address</button></a>
+
+            <a href={% url 'orders' %}><button class="tptrack__submition tpsign__reg active"  style = "margin-bottom:10px;">Orders</button></a>
+         </div>
+            
+        </div>
+          <div class="col-xl-9 col-lg-12 col-md-12">
+            <hr/>
+            <h3 class="tpdetails__title text-center">All Orders</h3>  
+            {% for item in order  %}  
+            <div class="row" style = "border:1px solid #ddd;padding:15px;">
+            <div class="col-sm-7 justify-content-center">        
+               
+                    <p>Product : {{item.product.title}}
+                    <p>Quantity : {{item.quantity}}</p>
+                    <p>Price : {{item.total_cost}}</p>
+                
+            </div>
+            <div class='col-sm-3'>
+                <p>Order Status : {{item.status}}</p>
+                {% if item.status == "Accepted" %}
+                <div class="progress">
+                    <div class="progress-bar bg-info bg-gradient" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+                {% if item.status == "Packed" %}
+                <div class="progress">
+                    <div class="progress-bar bg-primary bg-gradient" role="progressbar" style="width: 45%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+                {% if item.status == "On The Way" %}
+                <div class="progress">
+                    <div class="progress-bar bg-secondary bg-gradient" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+                {% if item.status == "Delivered" %}
+                <div class="progress">
+                    <div class="progress-bar bg-success bg-gradient" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+                {% if item.status == "Pending" %}
+                <div class="progress">
+                    <div class="progress-bar bg-warning bg-gradient" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+                {% if item.status == "Cancel" %}
+                  <div class="progress">
+                    <div class="progress-bar bg-danger bg-gradient" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                {% endif %}
+            </div>
+            </div>
+            {% endfor %}
+          </div>
+       </div>
+    </div>
+ </section>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'frontend/base.html' %}
+{% block 'title' %}My Profile{% endblock %}
+{% block 'content' %}
+{% block 'styles' %}
+<style>
+.nice-select {
+  width: 100% !important ;
+  margin-bottom:10px;
+}
+</style>
+{% endblock %}
+<section class="shop-area-start grey-bg pb-200">
+    <div class="container">
+       <div class="row">
+        <div class="col-xl-3 col-lg-12 col-md-12">
+          <div class="tpdetails__title-box">
+            <h3 class="tpdetails__title">Welcome <span class="text-capitalize">{{request.user}}</span></h3>            
+         </div>
+         <div>
+            <a href={% url 'profile' %}><button class="tptrack__submition tpsign__reg " style = "margin-bottom:10px;">Profile</button></a>
+          
+            <a href={% url 'address' %}><button class="tptrack__submition tpsign__reg active"  style = "margin-bottom:10px;">Address</button></a>
+            <a href={% url 'orders' %}><button class="tptrack__submition tpsign__reg "  style = "margin-bottom:10px;">Orders</button></a>
+
+         </div>
+            
+        </div>
+          <div class="col-xl-9 col-lg-12 col-md-12">
+            <hr/>
+            <h3 class="tpdetails__title text-center">Addresses</h3>    
+            <div class="row justify-content-center">        
+            {% for item in add %}
+                <div class="col-lg-6 col-sm-12">
+
+                <div class="tptrack__content tpdetails__product">
+                
+                    <lable>Name : {{item.name}}</label> <br>
+                    <lable>Locality : {{item.locality}}</label> <br>
+                    <lable>City : {{item.city}}</label> <br>
+                    <lable>Mobile : {{item.mobile}}</label> <br>
+                    <lable>State : {{item.state}}</label> <br>
+                    <lable>Zipcode : {{item.zipcode}}</label> <br>                   
+                    <p class="text-left">
+                        <a href={% url 'updateaddress' pk=item.id %} class="btn btn-success">Update</a>
+                    </p>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+       </div>
+    </div>
+ </section>
+{% endblock %}

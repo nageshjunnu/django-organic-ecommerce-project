@@ -1,0 +1,57 @@
+{% extends 'frontend/base.html' %}
+{% block 'title' %}My Profile{% endblock %}
+{% block 'content' %}
+{% block 'styles' %}
+<style>
+.nice-select {
+  width: 100% !important ;
+  margin-bottom:10px;
+}
+</style>
+{% endblock %}
+<section class="shop-area-start grey-bg pb-200">
+    <div class="container">
+       <div class="row">
+        <div class="col-xl-3 col-lg-12 col-md-12">
+          <div class="tpdetails__title-box">
+            <h3 class="tpdetails__title">Welcome <span class="text-capitalize">{{request.user}}</span></h3>            
+         </div>
+         <div>
+          <a href={% url 'profile' %}><button class="tptrack__submition active" style = "margin-bottom:10px;">Profile</button></a>
+          
+          <a href={% url 'address' %}><button class="tptrack__submition tpsign__reg "  style = "margin-bottom:10px;">Address</button></a>
+          <a href={% url 'orders' %}><button class="tptrack__submition tpsign__reg "  style = "margin-bottom:10px;">Orders</button></a>
+
+         </div>
+            
+        </div>
+          <div class="col-xl-9 col-lg-12 col-md-12">
+            <hr/>
+            <h3 class="tpdetails__title text-center">Add New Address</h3>            
+            <div class="tpshop__top ml-60">
+              <form method="post" action="">
+                  {% csrf_token %}
+                  {% for fm in form %}
+                    {{fm.label_tag}}{{fm}}
+                    <small>{{fm.errors|striptags}}</small>
+                    <br/>
+                  {% endfor %}
+
+                  <div class="tptrack__btn">
+                    <button type="submit" class="tptrack__submition active">Save<i class="fal fa-long-arrow-right"></i></button>
+                 </div>
+              
+               {% if form.non_field_errors %}
+                  {% for error in form.non_field_errors %}
+                    <div class="alert alert-{{error.tags}}" role="alert">
+                      {{error}}
+                    </div>
+                  {% endfor %}
+               {% endif %}
+              </form>
+            </div>
+          </div>
+       </div>
+    </div>
+ </section>
+{% endblock %}
